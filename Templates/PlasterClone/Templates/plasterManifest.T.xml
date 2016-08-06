@@ -8,8 +8,8 @@
         <tags>Project,Clone</tags>
     </metadata>
     <parameters>
-        <parameter name='Delivry' type='text' default='${env:temp}\<%=${PLASTER_PARAM_ProjectName}%>' prompt='Enter the name of the delivry directory'/>
-        <parameter name='Logs' type='text' default='${env:temp}\<%=${PLASTER_PARAM_ProjectName}%>' prompt='Enter the name of the logs directory'/>
+        <parameter name='Delivry' type='text' default='${env:temp}\Delivry' prompt='Enter the name of the delivry directory'/>
+        <parameter name='Logs' type='text' default='${env:temp}\Logs' prompt='Enter the name of the logs directory'/>
     </parameters>
     <content>
         <message>Create the profile of the project</message>

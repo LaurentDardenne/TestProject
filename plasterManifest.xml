@@ -11,9 +11,9 @@
         <parameter name='ProjectName' type='text' prompt='Enter the name of the project'/>    
         <parameter name='ModuleName' type='text' prompt='Enter the name of the module'/>    
              <!-- <parameter name='ModuleDesc' type='text' prompt='Enter a description of the module (required for publishing to the PowerShell Gallery)'/>  --> 
-        <parameter name='Version' type='text' default='1.0.0' prompt='Enter the version number for the module'/>
-        <parameter name='Delivry' type='text' default='${env:temp}\Delivry\${PLASTER_PARAM_ProjectName}' prompt='Enter the name of the delivry directory'/>
-        <parameter name='Logs' type='text' default='${env:temp}\Logs\${PLASTER_PARAM_ProjectName}' prompt='Enter the name of the logs directory'/>
+        <parameter name='Version' type='text' default='0.1.0.0' prompt='Enter the version number for the module'/>
+        <parameter name='Delivry' type='text' default='${env:temp}\Delivry' prompt='Enter the name of the delivry directory'/>
+        <parameter name='Logs' type='text' default='${env:temp}\Logs\' prompt='Enter the name of the logs directory'/>
         <parameter name='Log4Net' type='choice' default='0' store='text' prompt='Do you want to use the Log4Posh Module ?'>
             <choice label='&amp;Yes'
                     value="True"/>
@@ -79,6 +79,7 @@
 
 <!-- Step: Clone -->
         <templateFile source='Templates\PlasterClone\Templates\Project_Profile.T.ps1' destination='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'/>    
+
             <modify path='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'>
                 <replace >
                      <!-- Delayed substitution. Dept=1 level -->
