@@ -75,7 +75,10 @@
         <templateFile source='Templates\PostInstall.T.ps1'
             destination='PostInstall.ps1'
             encoding='UTF8'/> 
-
+        
+        <templateFile source='Templates\Build.T.ps1'
+            destination='Tools\Build.T.ps1'
+            encoding='UTF8'/> 
 
 <!-- Step: Clone -->
         <templateFile source='Templates\PlasterClone\Templates\Project_Profile.T.ps1' destination='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'/>    
