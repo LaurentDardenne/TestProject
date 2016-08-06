@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plasterManifest schemaVersion="0.3" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
+    <metadata>
+        <id>5dfd8d94-b2ea-419d-8a80-23a87024b359</id>
+        <title>New Powershell module project</title>
+        <description>Create a new project.</description>
+        <version>0.1.0</version>
+        <tags>Project,Create</tags>
+    </metadata>
+    <parameters>
+        <parameter name='ProjectName' type='text' prompt='Enter the name of the project'/>    
+        <parameter name='ModuleName' type='text' prompt='Enter the name of the module'/>    
+             <!-- <parameter name='ModuleDesc' type='text' prompt='Enter a description of the module (required for publishing to the PowerShell Gallery)'/>  --> 
+        <parameter name='Version' type='text' default='1.0.0' prompt='Enter the version number for the module'/>
+        <parameter name='Delivry' type='text' default='${env:temp}\Delivry\${PLASTER_PARAM_ProjectName}' prompt='Enter the name of the delivry directory'/>
+        <parameter name='Logs' type='text' default='${env:temp}\Logs\${PLASTER_PARAM_ProjectName}' prompt='Enter the name of the logs directory'/>
+        <parameter name='Log4Net' type='choice' default='0' store='text' prompt='Do you want to use the Log4Posh Module ?'>
+            <choice label='&amp;Yes'
+                    value="True"/>
+            <choice label='&amp;No'
+                    value="False"/>
+        </parameter>                    
+    </parameters>
+    <content>
+<!-- Step: create -->
+        <message>Create new directories and the required scripts</message>
+          <!-- We must use Encoding element : Powershell do not preserve the original encoding-->
+        <templateFile source='DirectoriesProject\**'  destination='' encoding='UTF8'/>
+        
+        <templateFile source='Templates\Module.Resources.T.psd1' destination='${PLASTER_PARAM_ModuleName}.Resources.psd1' encoding='UTF8'/>
+        <templateFile source='Templates\Module.Resources.T.psd1' destination='fr-FR\${PLASTER_PARAM_ModuleName}.Resources.psd1' encoding='UTF8'/>
+        <templateFile source='Templates\Module.Resources.T.psd1' destination='en-US\${PLASTER_PARAM_ModuleName}.Resources.psd1' encoding='UTF8'/>
+
+        <message>Create the profile of the project</message>
+        <templateFile source='Templates\Project_Profile.T.ps1' destination='${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'/>
+
+       
+         <!-- Personnal todo list -->
+        <templateFile source='Templates\TodoList.T.tdl' 
+            destination='${PLASTER_PARAM_ProjectName}.tdl' 
+            encoding='UTF8'/>
+            
+        <file source='Templates\_gitignore'
+              destination='.gitignore'/>
+            <modify path='.gitIgnore' encoding='UTF8'>
+              <replace>
+                     <!-- Append  -->
+                  <original>(?s)^(.*)$</original>
+                  <substitute expand='true'>``$0${PLASTER_PARAM_ProjectName}.tdl</substitute>
+              </replace>
+            </modify> 
+            
+        <templateFile source='Templates\Module.T.psm1'
+            destination='${PLASTER_PARAM_ModuleName}.psm1'
+            encoding='UTF8'/>       
+        <newModuleManifest destination='${PLASTER_PARAM_ModuleName}.psd1'
+            moduleVersion='$PLASTER_PARAM_Version'
+            rootModule='${PLASTER_PARAM_ModuleName}.psm1'
+            author='$PLASTER_PARAM_FullName'
+            description='$PLASTER_PARAM_ModuleDesc'
+            encoding='UTF8'/>
+            <modify path='${PLASTER_PARAM_ModuleName}.psd1' encoding='UTF8' 
+                    condition="$PLASTER_PARAM_Log4Net -eq 'True'">
+                <replace>
+                    <original>(?s)# RequiredModules = \@\(\)</original>
+                    <substitute>RequiredModules=@{ModuleName="Log4Posh";GUID="f796dd07-541c-4ad8-bfac-a6f15c4b06a0"; ModuleVersion="1.1.0.0"}</substitute>
+                </replace>
+            </modify> 
+        
+                <!-- hklm:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes  -->           
+        <templateFile source='Templates\ShellLibrary-ms.T.xml'
+            destination='${PLASTER_PARAM_ProjectName}.library-ms'
+            encoding='UTF8'/> 
+
+        <templateFile source='Templates\PostInstall.T.ps1'
+            destination='PostInstall.ps1'
+            encoding='UTF8'/> 
+
+
+<!-- Step: Clone -->
+        <templateFile source='Templates\PlasterClone\Templates\Project_Profile.T.ps1' destination='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'/>    
+            <modify path='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'>
+                <replace >
+                     <!-- Delayed substitution. Dept=1 level -->
+                    <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
+                    <substitute><![CDATA[<%=$2$3]]></substitute>
+                </replace>
+            </modify>  
+
+        <templateFile source='Templates\PlasterClone\Templates\TodoList.T.tdl' 
+            destination='Tools\PlasterClone\Templates\TodoList.T.tdl' 
+            encoding='UTF8'/>
+            <modify path='Tools\PlasterClone\Templates\TodoList.T.tdl' encoding='UTF8'>
+                <replace >
+                     <!-- Delayed substitution. Dept=1 level -->
+                    <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
+                    <substitute><![CDATA[<%=$2$3]]></substitute>
+                </replace>
+            </modify>       
+
+        <file source='Templates\_gitignore'
+              destination='Tools\PlasterClone\Templates\_gitignore'/>   
+        
+        <file source='Templates\PlasterClone\Templates\ShellLibrary-ms.T.xml'
+            destination='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms'/>
+            <modify path='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms' encoding='UTF8'>
+                <replace >
+                     <!-- Delayed substitution. Dept=1 level -->
+                    <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
+                    <substitute><![CDATA[<%=$2$3]]></substitute>
+                </replace>
+            </modify>                                      
+
+        <templateFile source='Templates\PlasterClone\Templates\PostInstall.T.ps1' 
+            destination='Tools\PlasterClone\Templates\PostInstall.T.ps1' 
+            encoding='UTF8'/>    
+            <modify path='Tools\PlasterClone\Templates\PostInstall.T.ps1' encoding='UTF8'>
+                <replace >
+                     <!-- Delayed substitution. Dept=1 level -->
+                    <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
+                    <substitute><![CDATA[<%=$2$3]]></substitute>
+                </replace>
+            </modify>  
+            
+        <templateFile source='Templates\PlasterClone\Templates\plasterManifest.T.xml' 
+            destination='Tools\PlasterClone\plasterManifest.xml'/>
+    </content>
+</plasterManifest>
