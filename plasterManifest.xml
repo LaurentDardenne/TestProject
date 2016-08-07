@@ -22,7 +22,7 @@
         </parameter>                    
     </parameters>
     <content>
-<!-- Step: create -->
+<message>First step : create the repository for the '${PLASTER_PARAM_ProjectName}' project</message>
         <message>Create new directories and the required scripts</message>
           <!-- We must use Encoding element : Powershell do not preserve the original encoding-->
         <templateFile source='DirectoriesProject\**'  destination='' encoding='UTF8'/>
@@ -80,10 +80,11 @@
             destination='Tools\Build.T.ps1'
             encoding='UTF8'/> 
 
-<!-- Step: Clone -->
-        <templateFile source='Templates\PlasterClone\Templates\Project_Profile.T.ps1' destination='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'/>    
 
-            <modify path='Tools\PlasterClone\${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'>
+<message>Second step : clone the existing repository of the ${PLASTER_PARAM_ProjectName} project</message>
+        <templateFile source='Templates\PlasterClone\Templates\Project_Profile.T.ps1' destination='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}_ProjectProfile.T.ps1' encoding='UTF8'/>    
+
+            <modify path='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}_ProjectProfile.T.ps1' encoding='UTF8'>
                 <replace >
                      <!-- Delayed substitution. Dept=1 level -->
                     <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>

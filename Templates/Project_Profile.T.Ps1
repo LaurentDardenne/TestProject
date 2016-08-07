@@ -4,8 +4,8 @@ $VcsPathRepository="<%=${PLASTER_DestinationPath}%>"
 
 #Variable commune à tous les postes
 #todo ${env:Name with space}
-if ( $null -eq [System.Environment]::GetEnvironmentVariable("<%=${PLASTER_PARAM_ProjectName}%>Profile","User"))
-{ [Environment]::SetEnvironmentVariable("<%=${PLASTER_PARAM_ProjectName}%>Profile",$VcsPathRepository, "User") }
+if ( $null -eq [System.Environment]::GetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>","User"))
+{ [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User") }
 
  # Variable spécifiques au poste de développement
 $<%=${PLASTER_PARAM_ProjectName}%>Delivry= "$('<%=${PLASTER_PARAM_Delivry}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   

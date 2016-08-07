@@ -1,27 +1,31 @@
 ﻿Import-Module Plaster
 $VerbosePreference='Continue'
 
+$Source='G:\PS\Plaster\TestProject'
+ #$outDir="$Env:Temp\Plaster\Out\TestProject"
+$outDir='G:\PS\Plaster\Out\TestProject'
+md $outDir 
 
-cd G:\PS\Plaster\TestProject
-
-remove-item 'G:\PS\Plaster\Out\TestProject' -Recurse
+remove-item $outDir -Recurse
 
 $PlasterParams = @{
-    TemplatePath = 'G:\PS\Plaster\TestProject'
-    DestinationPath = 'G:\PS\Plaster\Out\TestProject'
+    TemplatePath = $Source
+    DestinationPath = $outDir
     ProjectName ='PlasterTest'
     ModuleName = 'TestPlaster'
 }
 
 Invoke-Plaster @PlasterParams -Force 
 
-cd G:\PS\Plaster\Out\TestProject\Tools\PlasterClone
+$SourceClone="$OutDir\Tools\PlasterClone"
+$outDir='G:\PS\Plaster\Out\PlasterClone'
 
-remove-item 'C:\Ttemp\PlasterTest' -Recurse
+md  $outDir
+remove-item $outDir -Recurse
 
 $PlasterParams = @{
-    TemplatePath = 'G:\PS\Plaster\Out\TestProject\Tools\PlasterClone'
-    DestinationPath = 'C:\Ttemp\PlasterClone'
+    TemplatePath = $SourceClone
+    DestinationPath = $outDir
 }
 
 Invoke-Plaster @PlasterParams -Force 

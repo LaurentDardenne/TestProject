@@ -13,7 +13,7 @@
     </parameters>
     <content>
         <message>Create the profile of the project</message>
-        <templateFile source='Templates\Project_Profile.T.ps1' destination='<%=${PLASTER_PARAM_ProjectName}%>_ProjectProfile.ps1' encoding='UTF8'/>
+        <templateFile source='Templates\<%=${PLASTER_PARAM_ProjectName}%>_ProjectProfile.T.ps1' destination='<%=${PLASTER_PARAM_ProjectName}%>_ProjectProfile.ps1' encoding='UTF8'/>
 
          <!-- Personnal todo list -->
         <templateFile source='Templates\TodoList.T.tdl' 
@@ -29,7 +29,7 @@
               </replace>
             </modify> 
             
-        <file source='Templates\<%=${PLASTER_PARAM_ProjectName}%>.library-ms'
+        <templateFile source='Templates\<%=${PLASTER_PARAM_ProjectName}%>.library-ms'
             destination='<%=${PLASTER_PARAM_ProjectName}%>.library-ms'/> 
 
         <templateFile source='Templates\PostInstall.T.ps1'
