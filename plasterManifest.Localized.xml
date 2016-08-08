@@ -2,41 +2,41 @@
 <plasterManifest schemaVersion="0.3" xmlns="http://www.microsoft.com/schemas/PowerShell/Plaster/v1">
     <metadata>
         <id>5dfd8d94-b2ea-419d-8a80-23a87024b359</id>
-        <title>New Powershell module project</title>
-        <description>Create a new project.</description>
+        <title>$ManifestLocalizedData.Title</title>
+        <description>$ManifestLocalizedData.Description</description>
         <version>0.1.0</version>
         <tags>Project,Create</tags>
     </metadata>
     <parameters>
          <!-- use the content of $HashTableVariableName -->
-        <parameter name='ProjectName' type='text' prompt='Enter the name of the project'/>    
-        <parameter name='ModuleName' type='text' prompt='Enter the name of the module'/>    
-        <parameter name='ModuleDesc' type='text' default='My module in English'  store='text' prompt='Enter a description of the module (required for publishing to the PowerShell Gallery)'/> 
-        <parameter name='Version' type='text' default='0.1.0.0' prompt='Enter the version number for the module'/>
-        <parameter name='Delivry' type='text' default='${env:temp}\Delivry' prompt='Enter the name of the delivry directory'/>
-        <parameter name='Logs' type='text' default='${env:temp}\Logs\' prompt='Enter the name of the logs directory'/>
-        <parameter name='Log4Net' type='choice' default='0' store='text' prompt='Do you want to use the Log4Posh Module ?'>
-            <choice label='&amp;Yes'
+        <parameter name='ProjectName' type='text' prompt='$ManifestLocalizedData.P_ProjectName'/>    
+        <parameter name='ModuleName' type='text' prompt='$ManifestLocalizedData.P_ModuleName'/>    
+        <parameter name='ModuleDesc' type='text' default='$ManifestLocalizedData.P_ModuleDesc_default'  store='text' prompt='$ManifestLocalizedData.P_ModuleDesc'/> 
+        <parameter name='Version' type='text' default='0.1.0.0' prompt='$ManifestLocalizedData.P_Version'/>
+        <parameter name='Delivry' type='text' default='${env:temp}\Delivry' prompt='$ManifestLocalizedData.P_Delivry'/>
+        <parameter name='Logs' type='text' default='${env:temp}\Logs\' prompt='$ManifestLocalizedData.P_Logs'/>
+        <parameter name='Log4Net' type='choice' default='0' store='text' prompt='$ManifestLocalizedData.P_Log4Net'>
+            <choice label='$ManifestLocalizedData.C_Log4NetLabelYes'
                     value="True"/>
-            <choice label='&amp;No'
+            <choice label='$ManifestLocalizedData.C_Log4NetLabelNo'
                     value="False"/>
         </parameter>                    
     </parameters>
     <content>
-<message>First step : create the repository for the '${PLASTER_PARAM_ProjectName}' project</message>
-        <message>Create new directories and the required scripts</message>
-          <!-- We must use Encoding attribut : Powershell do not preserve the original encoding -->
+<message>$ManifestLocalizedData.M_FirstStep</message>
+        <message>$ManifestLocalizedData.M_CreateNewDirectory</message>
+          <!-- $ManifestLocalizedData.Note1-->
         <templateFile source='DirectoriesProject\**'  destination='' encoding='UTF8'/>
         
         <templateFile source='Templates\Module.Resources.T.psd1' destination='${PLASTER_PARAM_ModuleName}.Resources.psd1' encoding='UTF8'/>
         <templateFile source='Templates\Module.Resources.T.psd1' destination='fr-FR\${PLASTER_PARAM_ModuleName}.Resources.psd1' encoding='UTF8'/>
         <templateFile source='Templates\Module.Resources.T.psd1' destination='en-US\${PLASTER_PARAM_ModuleName}.Resources.psd1' encoding='UTF8'/>
 
-        <message>Create the profile of the project</message>
+        <message>$ManifestLocalizedData.M_CreateNewprofile</message>
         <templateFile source='Templates\Project_Profile.T.ps1' destination='${PLASTER_PARAM_ProjectName}_ProjectProfile.ps1' encoding='UTF8'/>
 
        
-         <!-- Personnal todo list -->
+         <!-- $ManifestLocalizedData.Xml_TDL -->
         <templateFile source='Templates\TodoList.T.tdl' 
             destination='${PLASTER_PARAM_ProjectName}.tdl' 
             encoding='UTF8'/>

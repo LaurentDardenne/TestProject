@@ -1,12 +1,8 @@
 ﻿Import-Module Plaster
 $VerbosePreference='Continue'
 
-$Source='G:\PS\Plaster\TestProject'
- #$outDir="$Env:Temp\Plaster\Out\TestProject"
-$outDir='G:\PS\Plaster\Out\TestProject'
-md $outDir 
-
-remove-item $outDir -Recurse
+$Source="$PSScriptRoot"
+$outDir="$Source\Out\Create"
 
 $PlasterParams = @{
     TemplatePath = $Source
@@ -18,14 +14,10 @@ $PlasterParams = @{
 Invoke-Plaster @PlasterParams -Force 
 
 $SourceClone="$OutDir\Tools\PlasterClone"
-$outDir='G:\PS\Plaster\Out\PlasterClone'
-
-md  $outDir
-remove-item $outDir -Recurse
 
 $PlasterParams = @{
     TemplatePath = $SourceClone
-    DestinationPath = $outDir
+    DestinationPath ="$Source\Out\Clone"
 }
 
 Invoke-Plaster @PlasterParams -Force 

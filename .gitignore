@@ -1,4 +1,6 @@
-﻿*.bak
+﻿# Don't checkin this output dir
+Out/
+*.bak
 todo.ps1
 
 
