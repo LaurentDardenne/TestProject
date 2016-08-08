@@ -44,7 +44,8 @@ $Culture=[System.Threading.Thread]::CurrentThread.CurrentCulture
 $Path="$PSScriptroot\plasterManifest_$Culture.xml"
 Set-Content -LiteralPath $path -Value $newContent -Encoding UTF8
 Write-Host "File created : $Path"
-#type $Path|more
-#Using-Culute -Culture 'fr-FR' -Script {.\BuildManifest.ps1}
-#Using-Culute -Culture 'en-US' -Script {.\BuildManifest.ps1}
+
+#. .\DirectoriesProject\Tools\Using-Culture.ps1
+#Using-Culture -Culture 'fr-FR' -Script {.\BuildManifest.ps1}
+#Using-Culture -Culture 'en-US' -Script {.\BuildManifest.ps1}
   
