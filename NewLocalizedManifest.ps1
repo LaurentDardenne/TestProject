@@ -1,8 +1,9 @@
-﻿cd $PSScriptroot
+﻿#requires -Modules Plaster
+cd $PSScriptroot
 
 $HashTableVariableName='ManifestLocalizedData'
 Microsoft.PowerShell.Utility\Import-LocalizedData $HashTableVariableName -FileName Manifest.Resources.psd1 -verbose
- #Assert: LocalizedData must exist inside the scope
+ #Assert: the variable $LocalizedData must exist inside the scope
 get-item variable:$HashTableVariableName -ea Stop >$null
 
 $Content=gc .\plasterManifest.Localized.xml -raw
@@ -43,9 +44,10 @@ $newContent = &$sbReplaceLocalized
 $Culture=[System.Threading.Thread]::CurrentThread.CurrentCulture
 $Path="$PSScriptroot\plasterManifest_$Culture.xml"
 Set-Content -LiteralPath $path -Value $newContent -Encoding UTF8
-Write-Host "File created : $Path"
+Write-Host "Created file : $Path"
 
-#. .\DirectoriesProject\Tools\Using-Culture.ps1
-#Using-Culture -Culture 'fr-FR' -Script {.\BuildManifest.ps1}
-#Using-Culture -Culture 'en-US' -Script {.\BuildManifest.ps1}
+
+# . .\DirectoriesProject\Tools\Using-Culture.ps1
+# Using-Culture -Culture 'fr-FR' -Script {.\NewLocalizedManifest.ps1}
+#Using-Culture -Culture 'en-US' -Script {.\NewLocalizedManifest.ps1}
   

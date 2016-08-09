@@ -4,7 +4,7 @@
   P_ProjectName=Enter the name of the project    
   P_ModuleName=Enter the name of the module   
   P_ModuleDesc=Enter a description of the module (required for publishing to the PowerShell Gallery)
-  P_ModuleDesc_default=
+  P_ModuleDesc_default=Enter a description of the module (required for publishing to the PowerShell Gallery)
   P_Version=Enter the version number for the module
   P_Delivry=Enter the name of the delivry directory
    #P_Delivry_default=$(Remove-item Z:\ -Whatif)

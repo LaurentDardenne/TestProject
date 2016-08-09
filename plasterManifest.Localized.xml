@@ -78,7 +78,7 @@
             encoding='UTF8'/> 
         
         <templateFile source='Templates\Build.T.ps1'
-            destination='Tools\Build.T.ps1'
+            destination='Tools\Build.ps1'
             encoding='UTF8'/> 
 
 
