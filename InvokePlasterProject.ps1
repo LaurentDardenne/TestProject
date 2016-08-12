@@ -7,8 +7,8 @@ $outDir="$Source\Out\Create"
 $PlasterParams = @{
     TemplatePath = $Source
     DestinationPath = $outDir
-    ProjectName ='PlasterTest'
-    ModuleName = 'TestPlaster'
+    ProjectName ='Log4Posh'
+    ModuleName = 'Log4Posh'
 }
 
 Invoke-Plaster @PlasterParams -Force 
