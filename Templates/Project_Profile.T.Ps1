@@ -1,11 +1,21 @@
-﻿
-# Spécifique au poste de développement
-$VcsPathRepository="<%=${PLASTER_DestinationPath}%>" 
+﻿Param (
+ # Spécifique au poste de développement
+ [ValidateScript({Test-Path $_})]
+ [string] $VcsPathRepository="<%=${PLASTER_DestinationPath}%>"
+) 
 
+if (Test-Path env:APPVEYOR_BUILD_FOLDER)
+{
+  $VcsPathRepository=$env:APPVEYOR_BUILD_FOLDER
+}
 #Variable commune à tous les postes
 #todo ${env:Name with space}
 if ( $null -eq [System.Environment]::GetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>","User"))
-{ [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User") }
+{ 
+ [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User")
+  #refresh the Environment Provider
+ $env:Profile<%=${PLASTER_PARAM_ProjectName}%>=$VcsPathRepository 
+}
 
  # Variable spécifiques au poste de développement
 $<%=${PLASTER_PARAM_ProjectName}%>Delivry= "$('<%=${PLASTER_PARAM_Delivry}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
