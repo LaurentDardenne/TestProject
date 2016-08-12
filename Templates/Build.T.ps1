@@ -1,5 +1,5 @@
 ﻿#Build.ps1
-#Construit la version de <%=${PLASTER_PARAM_ModuleName}%> selon la version de Powershell en cours. 
+#Construit la version de <%=${PLASTER_PARAM_ModuleName}%>  
  [CmdletBinding(DefaultParameterSetName = "Debug")]
  Param(
      [Parameter(ParameterSetName="Release")]
