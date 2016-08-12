@@ -1,19 +1,20 @@
 ﻿Param (
  # Spécifique au poste de développement
  [ValidateScript({Test-Path $_})]
- [string] $VcsPathRepository="<%=${PLASTER_DestinationPath}%>"
+ [string] $VcsPathRepository=$env:APPVEYOR_BUILD_FOLDER
 ) 
 
-if (Test-Path env:APPVEYOR_BUILD_FOLDER)
+if ($VcsPathRepository -eq [string]::Empty)
 {
-  $VcsPathRepository=$env:APPVEYOR_BUILD_FOLDER
+  $VcsPathRepository="<%=${PLASTER_DestinationPath}%>"
 }
+
 #Variable commune à tous les postes
 #todo ${env:Name with space}
 if ( $null -eq [System.Environment]::GetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>","User"))
 { 
  [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User")
-  #refresh the Environment Provider
+  #refresh the environment Provider
  $env:Profile<%=${PLASTER_PARAM_ProjectName}%>=$VcsPathRepository 
 }
 
