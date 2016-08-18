@@ -1,12 +1,16 @@
 ﻿Param (
  # Spécifique au poste de développement
- [ValidateScript({Test-Path $_})]
- [string] $VcsPathRepository=$env:APPVEYOR_BUILD_FOLDER
+ [string] $VcsPathRepository='' #"<%=${PLASTER_DestinationPath}%>"
 ) 
 
-if ($VcsPathRepository -eq [string]::Empty)
+if (Test-Path env:APPVEYOR_BUILD_FOLDER)
 {
-  $VcsPathRepository="<%=${PLASTER_DestinationPath}%>"
+  $VcsPathRepository=$env:APPVEYOR_BUILD_FOLDER
+}
+
+if (!(Test-Path $VcsPathRepository))
+{
+  Throw 'Configuration error, the variable $VcsPathRepository should be configured.'
 }
 
 #Variable commune à tous les postes
@@ -29,10 +33,17 @@ $<%=${PLASTER_PARAM_ProjectName}%>Setup= "$VcsPathRepository\Setup"
 $<%=${PLASTER_PARAM_ProjectName}%>Vcs= "$VcsPathRepository"
 $<%=${PLASTER_PARAM_ProjectName}%>Tests= "$VcsPathRepository\Tests"
 $<%=${PLASTER_PARAM_ProjectName}%>Tools= "$VcsPathRepository\Tools"
-$<%=${PLASTER_PARAM_ProjectName}%>Url= 'todo'
-#todo a supprimer une fois l'url du projet renseigné
-Set-PSBreakpoint -Variable <%=${PLASTER_PARAM_ProjectName}%>Url -Mode readwrite 
 
+if (Test-Path env:APPVEYOR_BUILD_FOLDER)
+{
+  $<%=${PLASTER_PARAM_ProjectName}%>Url="'https://github.com/${env:APPVEYOR_REPO_NAME}.git" 
+}
+else
+{
+  $<%=${PLASTER_PARAM_ProjectName}%>Url= 'Todo'
+  # Configuration error, the variable path $<%=${PLASTER_PARAM_ProjectName}%>Url should be configured.'
+  Set-PSBreakpoint -Variable <%=${PLASTER_PARAM_ProjectName}%>Url -Mode readwrite 
+}
  #PSDrive sur le répertoire du projet 
 $null=New-PsDrive -Scope Global -Name <%=${PLASTER_PARAM_ProjectName}%> -PSProvider FileSystem -Root $<%=${PLASTER_PARAM_ProjectName}%>Vcs 
 
