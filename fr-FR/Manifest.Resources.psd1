@@ -6,9 +6,9 @@
   P_ModuleDesc=Saisissez une description du module (prérequis à la publication sur PowerShell Gallery)
   P_ModuleDesc_default=Mon module en Français
   P_Version=Saisissez le numéro de version du module
-  P_Delivry=Saisissez le nom du répertoire de livraison
-  P_Delivry_default=$(Remove-item Z:\ -Whatif)
-  #P_Delivry_default=${env:temp}\\Delivry
+  P_Delivery=Saisissez le nom du répertoire de livraison
+  P_Delivery_default=$(Remove-item Z:\ -Whatif)
+  #P_Delivery_default=${env:temp}\\Delivery
   P_Logs=Saisissez le nom du répertoire des logs
   P_Logs_default=${env:temp}\\Logs
   P_Log4Net=Voulez-vous utiliser le module Log4Posh ?

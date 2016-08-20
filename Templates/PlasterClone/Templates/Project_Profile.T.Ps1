@@ -8,7 +8,7 @@ if ( $null -eq [System.Environment]::GetEnvironmentVariable("Profile<%=${PLASTER
 { [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User") }
 
  # Variable spécifiques au poste de développement
-$<%=${PLASTER_PARAM_ProjectName}%>Delivry= "$('<!%=${PLASTER_PARAM_Delivry}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
+$<%=${PLASTER_PARAM_ProjectName}%>Delivery= "$('<!%=${PLASTER_PARAM_Delivery}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
 $<%=${PLASTER_PARAM_ProjectName}%>Logs= "$('<!%=${PLASTER_PARAM_Logs}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>" 
 
  # Variable communes à tous les postes, leurs contenu est spécifique au poste de développement

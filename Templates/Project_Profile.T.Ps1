@@ -1,5 +1,5 @@
 ﻿Param (
- # Spécifique au poste de développement
+ # Specific to the development computer
  [string] $VcsPathRepository='' #"<%=${PLASTER_DestinationPath}%>"
 ) 
 
@@ -23,7 +23,7 @@ if ( $null -eq [System.Environment]::GetEnvironmentVariable("Profile<%=${PLASTER
 }
 
  # Variable spécifiques au poste de développement
-$<%=${PLASTER_PARAM_ProjectName}%>Delivry= "$('<%=${PLASTER_PARAM_Delivry}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
+$<%=${PLASTER_PARAM_ProjectName}%>Delivery= "$('<%=${PLASTER_PARAM_Delivery}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
 $<%=${PLASTER_PARAM_ProjectName}%>Logs= "$('<%=${PLASTER_PARAM_Logs}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>" 
 
  # Variable communes à tous les postes, leurs contenu est spécifique au poste de développement

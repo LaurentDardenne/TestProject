@@ -3,11 +3,11 @@
 
 Task default -Depends CreateZip 
 
-Task CreateZip -Depends Delivery,ValideParameterSet,TestBomFinal {
+Task CreateZip -Depends Delivery,PSScriptAnalyzer,TestBomFinal {
 
   $zipFile = "$env:\Temp\<%=${PLASTER_PARAM_ProjectName}%>.zip"
   Add-Type -assemblyname System.IO.Compression.FileSystem
-  [System.IO.Compression.ZipFile]::CreateFromDirectory($<%=${PLASTER_PARAM_ProjectName}%>Delivry, $zipFile)
+  [System.IO.Compression.ZipFile]::CreateFromDirectory($<%=${PLASTER_PARAM_ProjectName}%>Delivery, $zipFile)
   if (Test-Path env:APPVEYOR)
   { Push-AppveyorArtifact $zipFile }     
 }
@@ -22,11 +22,11 @@ $VerbosePreference='Continue'
 
 #Doc xml localisée
    #US
-   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\en-US\<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\en-US\<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1" 
+   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1" 
    Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\en-US\about_<%=${PLASTER_PARAM_ProjectName}%>.help.txt" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\en-US\about_<%=${PLASTER_PARAM_ProjectName}%>.help.txt"
 
   #Fr 
-   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\fr-FR\$<%={PLASTER_PARAM_ProjectName}%>.Resources.psd1" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\fr-FR\<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1"
+   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\fr-FR\$<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\fr-FR\<%=${PLASTER_PARAM_ProjectName}%>.Resources.psd1"
    Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\fr-FR\about_<%=${PLASTER_PARAM_ProjectName}%>.help.txt" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\fr-FR\about_<%=${PLASTER_PARAM_ProjectName}%>.help.txt"
  
 
@@ -38,14 +38,14 @@ $VerbosePreference='Continue'
 #Licence                         
 
 #Module
-      #$<%=${PLASTER_PARAM_ProjectName}%>.psm1 est créé par la tâche RemoveConditionnal
-   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\<%=${PLASTER_PARAM_ProjectName}%>.psd1" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison"
+      #<%=${PLASTER_PARAM_ProjectName}%>.psm1 est créé par la tâche RemoveConditionnal
+   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\<%=${PLASTER_PARAM_ProjectName}%>.psd1" "$<%=${PLASTER_PARAM_ProjectName}%>Delivery"
    
 #Setup
-   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Setup\<%=${PLASTER_PARAM_ProjectName}%>Setup.ps1" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison"
+   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Setup\<%=${PLASTER_PARAM_ProjectName}%>Setup.ps1" "$<%=${PLASTER_PARAM_ProjectName}%>Delivery"
 
 #Other 
-   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\Revisions.txt" "$<%=${PLASTER_PARAM_ProjectName}%>Livraison"
+   Copy "$<%=${PLASTER_PARAM_ProjectName}%>Vcs\Revisions.txt" "$<%=${PLASTER_PARAM_ProjectName}%>Delivery"
 } #Delivery
 
 Task RemoveConditionnal -Depend TestLocalizedData {
@@ -58,7 +58,7 @@ Task RemoveConditionnal -Depend TestLocalizedData {
     Foreach {
       $Source=$_
       Write-Verbose "Parse :$($_.FullName)"
-      $CurrentFileName="$<%=${PLASTER_PARAM_ProjectName}%>Livraison\$($_.Name)"
+      $CurrentFileName="$<%=${PLASTER_PARAM_ProjectName}%>Delivery\$($_.Name)"
       Write-Warning "CurrentFileName=$CurrentFileName"
       if ($Configuration -eq "Release")
       { 
@@ -114,12 +114,12 @@ Task Clean -Depends Init {
 # Supprime, puis recrée le dossier de livraison   
 
    $VerbosePreference='Continue'
-   Remove-Item $<%=${PLASTER_PARAM_ProjectName}%>Livraison -Recurse -Force -ea SilentlyContinue
-   "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\en-US", 
-   "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\fr-FR", 
-   "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\FormatData",
-   "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\TypeData",
-   "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\Logs"|
+   Remove-Item $<%=${PLASTER_PARAM_ProjectName}%>Delivery -Recurse -Force -ea SilentlyContinue
+   "$<%=${PLASTER_PARAM_ProjectName}%>Delivery\en-US", 
+   "$<%=${PLASTER_PARAM_ProjectName}%>Delivery\fr-FR", 
+   "$<%=${PLASTER_PARAM_ProjectName}%>Delivery\FormatData",
+   "$<%=${PLASTER_PARAM_ProjectName}%>Delivery\TypeData",
+   "$<%=${PLASTER_PARAM_ProjectName}%>Delivery\Logs"|
    Foreach {
     md $_ -Verbose -ea SilentlyContinue > $null
    } 
@@ -153,8 +153,8 @@ Task TestBOMFinal {
 
 #Validation de l'encodage des fichiers APRES la génération  
   
-  Write-Host "Validation de l'encodage des fichiers du répertoire : $<%=${PLASTER_PARAM_ProjectName}%>Livraison"
-  $InvalidFiles=@(&"$<%=${PLASTER_PARAM_ProjectName}%>Tools\Test-BOMFile.ps1" $<%=${PLASTER_PARAM_ProjectName}%>Livraison)
+  Write-Host "Validation de l'encodage des fichiers du répertoire : $<%=${PLASTER_PARAM_ProjectName}%>Delivery"
+  $InvalidFiles=@(&"$<%=${PLASTER_PARAM_ProjectName}%>Tools\Test-BOMFile.ps1" $<%=${PLASTER_PARAM_ProjectName}%>Delivery)
   if ($InvalidFiles.Count -ne 0)
   { 
      $InvalidFiles |Format-List *
@@ -162,37 +162,6 @@ Task TestBOMFinal {
   }
 } #TestBOMFinal
 
-Task ValideParameterSet {
-  # requiert PS V3 pour la vérification
-
-  ."$<%=${PLASTER_PARAM_ProjectName}%>Tools\New-FileNameTimeStamped.ps1"
-  ."$<%=${PLASTER_PARAM_ProjectName}%>Tools\Test-DefaultParameterSetName.ps1"
-  ."$<%=${PLASTER_PARAM_ProjectName}%>Tools\Test-ParameterSet.ps1"
-  Import-Module "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\<%=${PLASTER_PARAM_ProjectName}%>.psd1" -global
-  $Module=Import-Module "$<%=${PLASTER_PARAM_ProjectName}%>Livraison\<%=${PLASTER_PARAM_ProjectName}%>.psd1" -PassThru
-  $WrongParameterSet= @(
-    $Module.ExportedFunctions.GetEnumerator()|
-     Foreach-Object {
-       Test-DefaultParameterSetName -Command $_.Key |
-       Where-Object {-not $_.isValid} |
-       Foreach-Object { 
-         Write-Warning "[$($_.CommandName)]: Le nom du jeu par défaut $($_.Report.DefaultParameterSetName) est invalide."
-         $_
-       }
-      
-       Get-Command $_.Key |
-        Test-ParameterSet |
-        Where-Object {-not $_.isValid} |
-        Foreach-Object { 
-          Write-Warning "[$($_.CommandName)]: Le jeu $($_.ParameterSetName) est invalide."
-          $_
-        }
-     }
-  )
-  if ($WrongParameterSet.Count -gt 0) 
-  {
-    $FileName=New-FileNameTimeStamped "$<%=${PLASTER_PARAM_ProjectName}%>Logs\WrongParameterSet.ps1"
-    $WrongParameterSet |Export-CliXml $FileName
-    throw "Des fonctions déclarent des jeux de paramétres erronés. Voir les détails dans le fichier :`r`n $Filename"
-  }
-}#ValideParameterSet
+Task PSScriptAnalyzer {
+  Write-host "Todo ValideParameterSet etc"
+}#PSScriptAnalyzer

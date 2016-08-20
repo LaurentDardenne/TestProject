@@ -1,9 +1,9 @@
 ﻿#PostInstall 
 #Project <%=${PLASTER_PARAM_ProjectName}%>  
 
-$Delivry="$('<%=${PLASTER_PARAM_Delivry}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
+$Delivery="$('<%=${PLASTER_PARAM_Delivery}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
 $Logs="$('<%=${PLASTER_PARAM_Logs}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"
-$Delivry,$logs|
+$Delivery,$logs|
  Foreach { 
    if (!(Test-Path $_)
    ( New-Item $_ -ItemType Directory > $null }

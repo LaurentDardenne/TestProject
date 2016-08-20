@@ -13,7 +13,7 @@
         <parameter name='ModuleName' type='text' prompt='$ManifestLocalizedData.P_ModuleName'/>    
         <parameter name='ModuleDesc' type='text' default='$ManifestLocalizedData.P_ModuleDesc_default'  store='text' prompt='$ManifestLocalizedData.P_ModuleDesc'/> 
         <parameter name='Version' type='text' default='0.1.0.0' prompt='$ManifestLocalizedData.P_Version'/>
-        <parameter name='Delivry' type='text' default='${env:temp}\Delivry' prompt='$ManifestLocalizedData.P_Delivry'/>
+        <parameter name='Delivery' type='text' default='${env:temp}\Delivery' prompt='$ManifestLocalizedData.P_Delivery'/>
         <parameter name='Logs' type='text' default='${env:temp}\Logs\' prompt='$ManifestLocalizedData.P_Logs'/>
         <parameter name='Log4Net' type='choice' default='0' store='text' prompt='$ManifestLocalizedData.P_Log4Net'>
             <choice label='$ManifestLocalizedData.C_Log4NetLabelYes'
