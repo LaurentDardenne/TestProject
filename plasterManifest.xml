@@ -101,7 +101,7 @@
             encoding='UTF8'/>
             <modify path='Tools\PlasterClone\Templates\TodoList.T.tdl' encoding='UTF8'>
                 <replace >
-                     <!-- Delayed substitution. Dept=1 level -->
+                     <!-- Delayed substitution. depth=1 level -->
                     <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
                     <substitute><![CDATA[<%=$2$3]]></substitute>
                 </replace>
@@ -114,7 +114,7 @@
             destination='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms'/>
             <modify path='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms' encoding='UTF8'>
                 <replace >
-                     <!-- Delayed substitution. Dept=1 level -->
+                     <!-- Delayed substitution. depth=1 level -->
                     <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
                     <substitute><![CDATA[<%=$2$3]]></substitute>
                 </replace>
@@ -125,13 +125,14 @@
             encoding='UTF8'/>    
             <modify path='Tools\PlasterClone\Templates\PostInstall.T.ps1' encoding='UTF8'>
                 <replace >
-                     <!-- Delayed substitution. Dept=1 level -->
+                     <!-- Delayed substitution. depth=1 level -->
                     <original><![CDATA[(?s)(<!%=)(.*?)(%>)]]></original>
                     <substitute><![CDATA[<%=$2$3]]></substitute>
                 </replace>
             </modify>  
             
         <templateFile source='Templates\PlasterClone\Templates\plasterManifest.T.xml' 
-            destination='Tools\PlasterClone\plasterManifest.xml'/>
+            destination='Tools\PlasterClone\plasterManifest.xml'
+            encoding='UTF8'/>
     </content>
 </plasterManifest>
