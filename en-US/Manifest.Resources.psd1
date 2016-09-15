@@ -6,6 +6,7 @@
   P_ModuleDesc=Enter a description of the module (required for publishing to the PowerShell Gallery)
   P_ModuleDesc_default=Enter a description of the module (required for publishing to the PowerShell Gallery)
   P_Version=Enter the version number for the module
+  P_FullName=(Git) Enter your full name
   P_Delivery=Enter the name of the Delivery directory
    #P_Delivery_default=$(Remove-item Z:\ -Whatif)
   P_Delivery_default=${env:temp}\\Delivery  
