@@ -7,11 +7,12 @@ $outDir="$Source\Out\Create"
 $PlasterParams = @{
     TemplatePath = $Source
     DestinationPath = $outDir
-    ProjectName ='PSScriptAnalyzerRules'
-    ModuleName = 'PSScriptAnalyzerRules'
+    ProjectName ='Todo'
+    ModuleName = 'Todo'
 }
 
 Invoke-Plaster @PlasterParams
+#. .\PostAction.ps1 todo
 
 $SourceClone="$OutDir\Tools\PlasterClone"
 

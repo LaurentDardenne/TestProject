@@ -1,15 +1,30 @@
-﻿
-# Spécifique au poste de développement
-$VcsPathRepository="<!%=${PLASTER_DestinationPath}%>" 
+﻿Param (
+ # Specific to the development computer
+ [string] $VcsPathRepository='' #"<%=${PLASTER_DestinationPath}%>"
+) 
+
+if (Test-Path env:APPVEYOR_BUILD_FOLDER)
+{
+  $VcsPathRepository=$env:APPVEYOR_BUILD_FOLDER
+}
+
+if (!(Test-Path $VcsPathRepository))
+{
+  Throw 'Configuration error, the variable $VcsPathRepository should be configured.'
+}
 
 #Variable commune à tous les postes
 #todo ${env:Name with space}
 if ( $null -eq [System.Environment]::GetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>","User"))
-{ [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User") }
+{ 
+ [Environment]::SetEnvironmentVariable("Profile<%=${PLASTER_PARAM_ProjectName}%>",$VcsPathRepository, "User")
+  #refresh the environment Provider
+ $env:Profile<%=${PLASTER_PARAM_ProjectName}%>=$VcsPathRepository 
+}
 
  # Variable spécifiques au poste de développement
-$<%=${PLASTER_PARAM_ProjectName}%>Delivery= "$('<!%=${PLASTER_PARAM_Delivery}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
-$<%=${PLASTER_PARAM_ProjectName}%>Logs= "$('<!%=${PLASTER_PARAM_Logs}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>" 
+$<%=${PLASTER_PARAM_ProjectName}%>Delivery= "$('<%=${PLASTER_PARAM_Delivery}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>"   
+$<%=${PLASTER_PARAM_ProjectName}%>Logs= "$('<%=${PLASTER_PARAM_Logs}%>'.TrimEnd('\','/'))\<%=${PLASTER_PARAM_ProjectName}%>" 
 
  # Variable communes à tous les postes, leurs contenu est spécifique au poste de développement
 $<%=${PLASTER_PARAM_ProjectName}%>Bin= "$VcsPathRepository\Bin"
@@ -18,13 +33,11 @@ $<%=${PLASTER_PARAM_ProjectName}%>Setup= "$VcsPathRepository\Setup"
 $<%=${PLASTER_PARAM_ProjectName}%>Vcs= "$VcsPathRepository"
 $<%=${PLASTER_PARAM_ProjectName}%>Tests= "$VcsPathRepository\Tests"
 $<%=${PLASTER_PARAM_ProjectName}%>Tools= "$VcsPathRepository\Tools"
-$<%=${PLASTER_PARAM_ProjectName}%>Url= 'todo'
-#todo a supprimer une fois l'url du projet renseigné
-Set-PSBreakpoint -Variable <%=${PLASTER_PARAM_ProjectName}%>Url -Mode readwrite 
+$<%=${PLASTER_PARAM_ProjectName}%>Url="'https://github.com/${env:APPVEYOR_REPO_NAME}.git" 
 
  #PSDrive sur le répertoire du projet 
 $null=New-PsDrive -Scope Global -Name <%=${PLASTER_PARAM_ProjectName}%> -PSProvider FileSystem -Root $<%=${PLASTER_PARAM_ProjectName}%>Vcs 
 
-Write-Host "Projet <%=${PLASTER_PARAM_ProjectName}%> configuré." -Fore Green
+Write-Host "Settings of the variables of <%=${PLASTER_PARAM_ProjectName}%> project." -Fore Green
 
 rv VcsPathRepository

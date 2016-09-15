@@ -33,20 +33,11 @@ $<%=${PLASTER_PARAM_ProjectName}%>Setup= "$VcsPathRepository\Setup"
 $<%=${PLASTER_PARAM_ProjectName}%>Vcs= "$VcsPathRepository"
 $<%=${PLASTER_PARAM_ProjectName}%>Tests= "$VcsPathRepository\Tests"
 $<%=${PLASTER_PARAM_ProjectName}%>Tools= "$VcsPathRepository\Tools"
+$<%=${PLASTER_PARAM_ProjectName}%>Url="'https://github.com/${env:APPVEYOR_REPO_NAME}.git" 
 
-if (Test-Path env:APPVEYOR_BUILD_FOLDER)
-{
-  $<%=${PLASTER_PARAM_ProjectName}%>Url="'https://github.com/${env:APPVEYOR_REPO_NAME}.git" 
-}
-else
-{
-  $<%=${PLASTER_PARAM_ProjectName}%>Url= 'Todo'
-  # Configuration error, the variable path $<%=${PLASTER_PARAM_ProjectName}%>Url should be configured.'
-  Set-PSBreakpoint -Variable <%=${PLASTER_PARAM_ProjectName}%>Url -Mode readwrite 
-}
  #PSDrive sur le répertoire du projet 
 $null=New-PsDrive -Scope Global -Name <%=${PLASTER_PARAM_ProjectName}%> -PSProvider FileSystem -Root $<%=${PLASTER_PARAM_ProjectName}%>Vcs 
 
-Write-Host "Projet <%=${PLASTER_PARAM_ProjectName}%> configuré." -Fore Green
+Write-Host "Settings of the variables of <%=${PLASTER_PARAM_ProjectName}%> project." -Fore Green
 
 rv VcsPathRepository

@@ -84,6 +84,10 @@
         <templateFile source='Templates\Release.T.ps1'
             destination='Tools\Release.ps1'
             encoding='UTF8'/>
+        
+        <templateFile source='Templates\Nuspec4.Tps1'
+            destination='Tools\Nuspec4${PLASTER_PARAM_ModuleName}.ps1'
+            encoding='UTF8-NoBOM'/>                
 
 <message>Second step : clone the existing repository of the ${PLASTER_PARAM_ProjectName} project</message>
         <templateFile source='Templates\PlasterClone\Templates\Project_Profile.T.ps1' destination='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}_ProjectProfile.T.ps1' encoding='UTF8'/>    
