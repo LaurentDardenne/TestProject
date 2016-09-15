@@ -111,9 +111,6 @@
                     <substitute><![CDATA[<%=$2$3]]></substitute>
                 </replace>
             </modify>       
-
-        <file source='Templates\_gitignore'
-              destination='Tools\PlasterClone\Templates\_gitignore'/>   
         
         <file source='Templates\PlasterClone\Templates\ShellLibrary-ms.T.xml'
             destination='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms'/>

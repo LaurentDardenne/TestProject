@@ -112,9 +112,6 @@
                 </replace>
             </modify>       
 
-        <file source='Templates\_gitignore'
-              destination='Tools\PlasterClone\Templates\_gitignore'/>   
-        
         <file source='Templates\PlasterClone\Templates\ShellLibrary-ms.T.xml'
             destination='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms'/>
             <modify path='Tools\PlasterClone\Templates\${PLASTER_PARAM_ProjectName}.library-ms' encoding='UTF8'>

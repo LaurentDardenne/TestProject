@@ -39,7 +39,7 @@ $<%=${PLASTER_PARAM_ProjectName}%>Vcs= "$VcsPathRepository"
 $<%=${PLASTER_PARAM_ProjectName}%>Tests= "$VcsPathRepository\Tests"
 $<%=${PLASTER_PARAM_ProjectName}%>Tools= "$VcsPathRepository\Tools"
 
-$<%=${PLASTER_PARAM_ProjectName}%>Url='https://github.com/<%=${PLASTER_PARAM_FullName}%>\<%=${PLASTER_PARAM_ProjectName}%>' 
+$<%=${PLASTER_PARAM_ProjectName}%>Url='https://github.com/<%=${PLASTER_PARAM_FullName}%>/<%=${PLASTER_PARAM_ProjectName}%>' 
 
  #PSDrive to the project directory 
 $null=New-PsDrive -Scope Global -Name <%=${PLASTER_PARAM_ProjectName}%> -PSProvider FileSystem -Root $<%=${PLASTER_PARAM_ProjectName}%>Vcs 
