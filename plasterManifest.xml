@@ -85,7 +85,7 @@
             destination='Tools\Release.ps1'
             encoding='UTF8'/>
         
-        <templateFile source='Templates\Nuspec4.Tps1'
+        <templateFile source='Templates\Nuspec4.T.ps1'
             destination='Tools\Nuspec4${PLASTER_PARAM_ModuleName}.ps1'
             encoding='UTF8-NoBOM'/>                
 
